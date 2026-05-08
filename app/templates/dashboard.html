@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="dashboard-head">
+  <div>
+    <p class="eyebrow">Workspace cloud</p>
+    <h1>Bienvenue {{ current_user.email }}</h1>
+    <p class="lead">Deployez et suivez vos systemes d'exploitation en cloud.</p>
+  </div>
+</section>
+
+<section class="dashboard-grid">
+  <article class="card">
+    <h3>Nouvelle instance</h3>
+    <form method="post" action="/cloud/instances" class="form-grid">
+      <label>Nom de l'instance
+        <input type="text" name="name" required placeholder="prod-api-01" />
+      </label>
+      <label>OS image
+        <select name="os_image_id" required>
+          {% for image in os_images %}
+          <option value="{{ image.id }}">{{ image.name }} ({{ image.family }} {{ image.version }})</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>Region
+        <select name="region" required>
+          <option value="westeurope">West Europe</option>
+          <option value="northeurope">North Europe</option>
+          <option value="eastus">East US</option>
+          <option value="southeastasia">Southeast Asia</option>
+        </select>
+      </label>
+      <label>vCPU
+        <input type="number" name="cpu_cores" min="1" max="16" value="2" required />
+      </label>
+      <label>RAM (GB)
+        <input type="number" name="memory_gb" min="2" max="64" value="4" required />
+      </label>
+      <label>Disque (GB)
+        <input type="number" name="disk_gb" min="20" max="512" value="60" required />
+      </label>
+      <button class="btn" type="submit">Provisionner</button>
+    </form>
+  </article>
+
+  <article class="card">
+    <h3>Mes instances</h3>
+    {% if instances %}
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>OS</th>
+            <th>Statut</th>
+            <th>Region</th>
+            <th>IP</th>
+            <th>Acces</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for vm in instances %}
+          <tr>
+            <td>{{ vm.name }}</td>
+            <td>{{ vm.os_image.name }}</td>
+            <td>
+              <span class="status status-{{ vm.status }}">{{ vm.status }}</span>
+            </td>
+            <td>{{ vm.region }}</td>
+            <td>{{ vm.public_ip or '-' }}</td>
+            <td>{{ vm.access_username or '-' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="muted">Aucune instance pour le moment.</p>
+    {% endif %}
+  </article>
+</section>
+{% endblock %}

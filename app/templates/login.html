@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="auth-wrap">
+  <article class="auth-card stagger-up">
+    <h1>Connexion</h1>
+    <p class="muted">Accedez a votre espace cloud.</p>
+    <form method="post" action="/auth/login" class="form-grid">
+      <label>Email
+        <input type="email" name="email" required />
+      </label>
+      <label>Mot de passe
+        <input type="password" name="password" required />
+      </label>
+      <button class="btn" type="submit">Se connecter</button>
+    </form>
+    <p class="muted small">Pas encore verifie ? Utilisez la page verification.</p>
+    <a class="btn btn-ghost" href="/auth/verify-code">Verifier un compte</a>
+  </article>
+</section>
+{% endblock %}

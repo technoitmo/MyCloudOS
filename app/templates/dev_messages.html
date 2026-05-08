@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="card">
+  <h1>Boite de messages dev</h1>
+  <p class="muted">Simulation locale des emails sortants pour tests.</p>
+  {% if messages %}
+  <div class="messages-list">
+    {% for msg in messages %}
+    <article class="message-card">
+      <h4>{{ msg.subject }}</h4>
+      <p><strong>Destinataire:</strong> {{ msg.recipient }}</p>
+      <pre>{{ msg.body }}</pre>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="muted">Aucun message envoye.</p>
+  {% endif %}
+</section>
+{% endblock %}

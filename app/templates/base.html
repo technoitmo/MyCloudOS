@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title or 'MyCloudOS' }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
+  <body>
+    <div class="bg-orb orb-left"></div>
+    <div class="bg-orb orb-right"></div>
+
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="/">MyCloudOS</a>
+        <nav>
+          <a href="/">Accueil</a>
+          {% if current_user %}
+          <a href="/dashboard">Dashboard</a>
+          <a href="/auth/logout">Deconnexion</a>
+          {% else %}
+          <a href="/auth/login">Connexion</a>
+          <a class="btn btn-sm" href="/auth/register">Creer un compte</a>
+          {% endif %}
+        </nav>
+      </div>
+    </header>
+
+    <main class="container page-content fade-in">
+      {% if flashes %}
+      <section class="flash-stack">
+        {% for flash in flashes %}
+        <div class="flash flash-{{ flash.level }}">{{ flash.message }}</div>
+        {% endfor %}
+      </section>
+      {% endif %}
+      {% block content %}{% endblock %}
+    </main>
+
+    <script src="/static/js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+  <div>
+    <p class="eyebrow">Cloud Infrastructure SaaS</p>
+    <h1>Provisionnez des OS cloud comme une mini plateforme hyperscale.</h1>
+    <p class="lead">
+      MyCloudOS est un SaaS Python full-stack pour gerer des instances cloud
+      multi-OS: Windows, Ubuntu, Linux et plus, avec une experience securisee
+      et orientee operations.
+    </p>
+    <div class="hero-actions">
+      {% if current_user %}
+      <a class="btn" href="/dashboard">Acceder au dashboard</a>
+      {% else %}
+      <a class="btn" href="/auth/register">Commencer maintenant</a>
+      <a class="btn btn-ghost" href="/auth/login">Se connecter</a>
+      {% endif %}
+    </div>
+  </div>
+  <aside class="hero-panel">
+    <h3>Points cles</h3>
+    <ul>
+      <li>Auth complete avec verification par code et lien</li>
+      <li>Catalogue OS cloud (Windows, Ubuntu, Debian, Fedora)</li>
+      <li>Creation d'instances et suivi du provisioning</li>
+      <li>Mode local pret pour tests PC</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="grid-3">
+  <article class="card">
+    <h3>Controle</h3>
+    <p>Choisissez region, CPU, RAM, disque et OS image pour chaque instance.</p>
+  </article>
+  <article class="card">
+    <h3>Securite</h3>
+    <p>Compte non utilisable tant que la verification email n'est pas validee.</p>
+  </article>
+  <article class="card">
+    <h3>Extensible</h3>
+    <p>Architecture prete a integrer un vrai provider cloud (Azure, OpenStack, etc.).</p>
+  </article>
+</section>
+{% endblock %}

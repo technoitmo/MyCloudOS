@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="auth-wrap">
+  <article class="auth-card stagger-up">
+    <h1>Verification du compte</h1>
+    <p class="muted">Saisissez le code recu, ou utilisez le lien envoye.</p>
+    <form method="post" action="/auth/verify-code" class="form-grid">
+      <label>Email
+        <input type="email" name="email" required value="{{ prefill_email }}" />
+      </label>
+      <label>Code a 6 chiffres
+        <input type="text" name="code" required pattern="[0-9]{6}" maxlength="6" />
+      </label>
+      <button class="btn" type="submit">Verifier le compte</button>
+    </form>
+    <p class="muted small">
+      En local, ouvrez la boite de dev:
+      <a href="/dev/messages">/dev/messages</a>
+    </p>
+  </article>
+</section>
+{% endblock %}

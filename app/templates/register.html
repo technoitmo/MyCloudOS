@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="auth-wrap">
+  <article class="auth-card stagger-up">
+    <h1>Creer un compte</h1>
+    <p class="muted">Inscription securisee avec verification email.</p>
+    <form method="post" action="/auth/register" class="form-grid">
+      <label>Email
+        <input type="email" name="email" required placeholder="vous@exemple.com" />
+      </label>
+      <label>Mot de passe
+        <input type="password" name="password" required minlength="8" placeholder="Minimum 8 caracteres" />
+      </label>
+      <button class="btn" type="submit">Creer le compte</button>
+    </form>
+  </article>
+</section>
+{% endblock %}
