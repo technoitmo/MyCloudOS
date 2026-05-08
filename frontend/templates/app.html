@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyCloudOS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
+  <body>
+    <div class="bg-orb orb-left"></div>
+    <div class="bg-orb orb-right"></div>
+
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="/">MyCloudOS</a>
+        <nav>
+          <a href="#auth">Authentification</a>
+          <a href="#dashboard">Dashboard</a>
+          <button id="logoutBtn" class="btn btn-sm btn-ghost" type="button">Deconnexion</button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container page-content fade-in">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Frontend autonome - port 3009</p>
+          <h1>Cloud OS management via API backend</h1>
+          <p class="lead">
+            Interface frontend separee qui consomme le backend FastAPI sur le port 8009.
+          </p>
+          <div id="statusBox" class="flash flash-info" style="display:none"></div>
+        </div>
+        <aside class="hero-panel">
+          <h3>Mode d'emploi</h3>
+          <ul>
+            <li>1. Creer un compte</li>
+            <li>2. Verifier via code ou lien email</li>
+            <li>3. Se connecter</li>
+            <li>4. Provisionner des instances cloud</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section id="auth" class="dashboard-grid">
+        <article class="card">
+          <h3>Inscription</h3>
+          <form id="registerForm" class="form-grid">
+            <label>Email
+              <input type="email" name="email" required />
+            </label>
+            <label>Mot de passe
+              <input type="password" name="password" minlength="8" required />
+            </label>
+            <button class="btn" type="submit">Creer le compte</button>
+          </form>
+        </article>
+
+        <article class="card">
+          <h3>Verification par code</h3>
+          <form id="verifyForm" class="form-grid">
+            <label>Email
+              <input type="email" name="email" required />
+            </label>
+            <label>Code
+              <input type="text" name="code" pattern="[0-9]{6}" maxlength="6" required />
+            </label>
+            <button class="btn" type="submit">Verifier</button>
+          </form>
+          <p class="muted small">Lien de verification envoye vers /verify?token=...</p>
+        </article>
+      </section>
+
+      <section class="dashboard-grid" style="margin-top:18px">
+        <article class="card">
+          <h3>Connexion</h3>
+          <form id="loginForm" class="form-grid">
+            <label>Email
+              <input type="email" name="email" required />
+            </label>
+            <label>Mot de passe
+              <input type="password" name="password" required />
+            </label>
+            <button class="btn" type="submit">Se connecter</button>
+          </form>
+        </article>
+
+        <article class="card">
+          <h3>Messages dev email</h3>
+          <button id="loadMessagesBtn" class="btn btn-ghost" type="button">Rafraichir</button>
+          <div id="devMessages" class="messages-list" style="margin-top:12px"></div>
+        </article>
+      </section>
+
+      <section id="dashboard" class="dashboard-grid" style="margin-top:18px">
+        <article class="card">
+          <h3>Nouvelle instance</h3>
+          <form id="instanceForm" class="form-grid">
+            <label>Nom
+              <input type="text" name="name" required />
+            </label>
+            <label>OS
+              <select name="os_image_id" id="osSelect" required></select>
+            </label>
+            <label>Region
+              <select name="region" required>
+                <option value="westeurope">West Europe</option>
+                <option value="northeurope">North Europe</option>
+                <option value="eastus">East US</option>
+                <option value="southeastasia">Southeast Asia</option>
+              </select>
+            </label>
+            <label>vCPU
+              <input type="number" name="cpu_cores" min="1" max="16" value="2" required />
+            </label>
+            <label>RAM (GB)
+              <input type="number" name="memory_gb" min="2" max="64" value="4" required />
+            </label>
+            <label>Disque (GB)
+              <input type="number" name="disk_gb" min="20" max="512" value="60" required />
+            </label>
+            <button class="btn" type="submit">Provisionner</button>
+          </form>
+        </article>
+
+        <article class="card">
+          <h3>Mes instances</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nom</th>
+                  <th>OS</th>
+                  <th>Statut</th>
+                  <th>Region</th>
+                  <th>IP</th>
+                  <th>Acces</th>
+                </tr>
+              </thead>
+              <tbody id="instancesBody"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <script>
+      window.MYCLOUDOS_BACKEND_URL = "{{ backend_url }}";
+    </script>
+    <script src="/static/js/app-spa.js"></script>
+  </body>
+</html>

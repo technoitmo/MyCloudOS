@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verification - MyCloudOS</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
+  <body>
+    <main class="container page-content fade-in">
+      <section class="card" style="max-width:720px; margin:0 auto;">
+        <h1>Verification du compte</h1>
+        <p class="muted" id="verifyMessage">Verification en cours...</p>
+        <a class="btn" href="/">Retour a l'accueil</a>
+      </section>
+    </main>
+
+    <script>
+      window.MYCLOUDOS_BACKEND_URL = "{{ backend_url }}";
+    </script>
+    <script src="/static/js/verify.js"></script>
+  </body>
+</html>

@@ -1,7 +1,8 @@
-from fastapi import APIRouter, Depends, Form, Request
+from fastapi import APIRouter, Depends, Form, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 
+from app.core.config import settings
 from app.core.session import add_flash, pop_flashes
 from app.db import get_db
 from app.deps import get_current_user
@@ -94,6 +95,9 @@ def create_instance(
 
 @router.get("/dev/messages")
 def dev_messages(request: Request, db: Session = Depends(get_db)):
+    if settings.EMAIL_MODE != "dev":
+        raise HTTPException(status_code=404, detail="Endpoint available only in EMAIL_MODE=dev")
+
     messages = db.query(OutboundMessage).order_by(OutboundMessage.created_at.desc()).limit(20).all()
     return request.app.state.templates.TemplateResponse(
         "dev_messages.html",
